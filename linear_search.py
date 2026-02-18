@@ -55,9 +55,9 @@ if __name__ == "__main__":
     print(searcher.search(42))    # Output: 3
     print(searcher.search(99))    # Output: -1
     print(searcher.contains(25))  # Output: True
+    print(searcher.contains(1))  # Output: False
+    print(searcher.contains(98))  # Output: False
 
     # Add new element and search
     searcher.add(99)
     print(searcher.search(99))    # Output: 5
-
-    print(searcher)  # Display current state
