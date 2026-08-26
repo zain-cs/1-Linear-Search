@@ -1,7 +1,7 @@
 <h1 align="center">🔍 Linear Search</h1>
 
 <p align="center">
-  <i>A complete, beginner-friendly learning package for the Linear Search algorithm — concept, complexity, animated walkthrough, and a clean Python implementation.</i>
+  <i>A complete, beginner-friendly learning package for the Linear Search algorithm — concept, complexity, animated walkthrough, and two Python implementations (functional and OOP).</i>
 </p>
 
 <p align="center">
@@ -21,15 +21,15 @@ The animation below shows exactly how Linear Search checks each element, one at 
   <img src="linear_search_demo.gif" alt="Linear Search animated walkthrough" width="640"/>
 </p>
 
-> 🟡 Amber = currently being checked  ·  ⚪ Gray = checked, no match  ·  🟢 Green = target found
+> 🟡 Amber = currently being checked · ⚪ Gray = checked, no match · 🟢 Green = target found
 
 ---
 
 ## 📖 What is Linear Search?
 
-Linear Search (also called **Sequential Search**) is the simplest searching algorithm. It walks through a list **one element at a time**, from the beginning, and compares each element to the target value. If it finds a match, it returns that position. If it reaches the end without a match, it reports that the value isn't present.
+Linear Search (also called **Sequential Search**) is the simplest searching algorithm. It walks through a list **one element at a time**, from the beginning, comparing each element to the target value. If it finds a match, it returns that position. If it reaches the end without a match, it reports that the value isn't present.
 
-It doesn't require the list to be sorted — which is its biggest advantage over algorithms like Binary Search, at the cost of being slower on large datasets.
+It doesn't require the list to be sorted — its biggest advantage over algorithms like Binary Search, at the cost of being slower on large datasets.
 
 ---
 
@@ -50,7 +50,7 @@ It doesn't require the list to be sorted — which is its biggest advantage over
 | **Best Case** | `O(1)` | Target is the first element |
 | **Average Case** | `O(n)` | Target is somewhere in the middle |
 | **Worst Case** | `O(n)` | Target is the last element, or not present at all |
-| **Space Complexity** | `O(1)` | No extra space needed — search happens in place |
+| **Space Complexity** | `O(1)` | Search happens in place — no extra memory needed |
 
 ---
 
@@ -66,39 +66,67 @@ function linearSearch(array, target):
 
 ---
 
-## 🐍 Python Implementation
+## 🐍 Implementation
+
+This repo includes **two implementations** of the same algorithm — a simple function, and an object-oriented version with a small extra feature set.
+
+### 1️⃣ Function-Based
 
 ```python
 def linear_search(arr, target):
-    """
-    Searches for `target` in `arr` by checking each element sequentially.
-
-    Parameters:
-        arr (list): The list to search through.
-        target: The value to search for.
-
-    Returns:
-        int: The index of `target` if found, otherwise -1.
-    """
     for index, value in enumerate(arr):
         if value == target:
-            return index
-    return -1
+            return index  # Found
+    return -1  # Not found
 
 
-if __name__ == "__main__":
-    numbers = [8, 23, 4, 17, 11, 42, 6, 29, 15, 37]
-    target = 42
-
-    result = linear_search(numbers, target)
-
-    if result != -1:
-        print(f"Found {target} at index {result}")
-    else:
-        print(f"{target} not found in the list")
+# Example
+data = [10, 25, 37, 42, 53]
+print(linear_search(data, 42))  # Output: 3
 ```
 
-> 💡 See [`linear_search.py`](./linear_search.py) for the full commented implementation, and the [lecture notes](./Linear%20Search%20-%20Lecture.pdf) for a deeper explanation of the concept and complexity analysis.
+### 2️⃣ Object-Oriented
+
+The `LinearSearch` class wraps the same logic in a small reusable structure, and adds two convenience methods: `contains()` for a quick boolean check, and `add()` to append new data and search again.
+
+```python
+class LinearSearch:
+    """Simple Linear Search class implementation."""
+
+    def __init__(self, data=None):
+        self.data = data if data is not None else []
+
+    def search(self, target):
+        """Search for target and return index, or -1 if not found."""
+        for index, value in enumerate(self.data):
+            if value == target:
+                return index
+        return -1
+
+    def contains(self, target):
+        """Return True if target exists in the data, else False."""
+        return self.search(target) != -1
+
+    def add(self, value):
+        """Append a new value to the data."""
+        self.data.append(value)
+
+
+# Example
+searcher = LinearSearch([10, 25, 37, 42, 53])
+
+print(searcher.search(42))      # Output: 3
+print(searcher.search(99))      # Output: -1
+print(searcher.contains(25))    # Output: True
+print(searcher.contains(1))     # Output: False
+print(searcher.contains(98))    # Output: False
+
+# Add a new element and search again
+searcher.add(99)
+print(searcher.search(99))      # Output: 5
+```
+
+> 💡 See [`linear_search.py`](./linear_search.py) for the full file, and the lecture notes for a deeper explanation of the concept and complexity analysis.
 
 ---
 
@@ -118,7 +146,7 @@ No external dependencies required — pure Python standard library.
 
 | File | Description |
 |---|---|
-| `linear_search.py` | Commented Python implementation of the algorithm |
+| `linear_search.py` | Function-based and OOP implementations of the algorithm |
 | `Linear Search - Lecture.pdf` | Full concept explanation, complexity breakdown, and examples |
 | `Linear Search - Lecture.docx` | Editable version of the lecture notes |
 
